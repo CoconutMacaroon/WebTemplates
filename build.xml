@@ -1,10 +1,9 @@
 <project>
-
     <target name="clean">
         <delete dir="build"/>
     </target>
-
-    <target name="compile">
+    
+    <target name="compile" depends="format">
         <mkdir dir="build/classes"/>
         <javac srcdir="src" destdir="build/classes" includeantruntime="false"/>
     </target>
@@ -20,6 +19,13 @@
 
     <target name="run" depends="jar">
         <java jar="build/jar/Main.jar" fork="true"/>
+    </target>
+
+    <target name="format">
+        <exec executable="/bin/sh">
+            <arg value="-c" />
+            <arg value="find . -name *.java -exec clang-format -i {} \;"/>
+        </exec>
     </target>
 
 </project>
